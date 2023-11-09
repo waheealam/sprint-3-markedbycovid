@@ -1,0 +1,77 @@
+version: 2.1
+
+filter-build-test-on: &filter-build-test-on
+  filters:
+    branches:
+      only: [main, /Sprint-Branch-Prefix\/.*/]
+
+filter-deploy-on: &filter-deploy-on
+  filters:
+    branches:
+      only: main
+
+orbs:
+  python: circleci/python@2.1.1
+  cypress: cypress-io/cypress@3.1.1
+  heroku: circleci/heroku@2.0.0
+
+jobs:
+  build-and-test:
+    parallelism: 2
+    docker:
+      - image: cimg/python:3.11.1-browsers
+        environment:
+          DATABASE_URL: "postgres://postgres:circle_test_pwd@localhost:5432/circle_test?sslmode=allow"
+      - image: nimbustech/postgres-ssl:9.5
+        environment:
+          DATABASE_URL: "postgres://postgres:circle_test_pwd@localhost:5432/circle_test?sslmode=allow"
+          POSTGRES_USER: postgres
+          POSTGRES_DB: circle_test
+          POSTGRES_PASSWORD: circle_test_pwd
+    steps:
+      - checkout
+      - python/install-packages:
+          pkg-manager: pipenv
+      - restore_cache:
+          keys:
+            - v1-npm-deps-{{ checksum "package-lock.json" }}
+      - cypress/install:
+          post-install: |
+            pipenv run python manage.py showmigrations
+            find . -path "*/migrations/*.py" -not -name "__init__.py" -delete
+            find . -path "*/migrations/*.pyc"  -delete
+            pipenv run python manage.py makemigrations
+            pipenv run python manage.py migrate
+            pipenv run python manage.py createsuperuser --email=$CYPRESS_USERNAME --noinput
+      - cypress/run-tests:
+          start-command: pipenv run python manage.py runserver
+          cypress-command: |
+            if [[ $CIRCLE_NODE_INDEX == 0 ]]; then
+              npx cypress run --browser chrome --spec "cypress/e2e/adminScripts.cy.js"
+            elif [[ $CIRCLE_NODE_INDEX == 1 ]]; then
+              npx cypress run --browser chrome --spec "cypress/e2e/frontEndScripts.cy.js"
+            fi
+      - store_artifacts:
+          path: cypress/videos
+      - store_artifacts:
+          path: cypress/screenshots
+      - save_cache:
+          key: v1-npm-deps-{{ checksum "package-lock.json" }}
+          paths:
+            - ~/.cache/npm-deps
+  deploy-to-heroku:
+    executor: heroku/default
+    steps:
+      - checkout
+      - heroku/install
+      - heroku/deploy-via-git
+
+workflows:
+  build-and-test-workflow:
+    jobs:
+      - build-and-test:
+          <<: *filter-build-test-on
+      - deploy-to-heroku:
+          <<: *filter-deploy-on
+          requires:
+            - build-and-test

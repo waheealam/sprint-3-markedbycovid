@@ -1,0 +1,21 @@
+{
+  "title": "Wagtail About Page Title",
+  "page_title": "About Title Test",
+  "about_body": "About Body Test",
+  "host_name": "localhost",
+  "port": "80",
+  "site_name": "markedbycovid",
+  "general_email": "youremail@unomaha.edu",
+  "press_email": "youremail@unomaha.edu",
+  "facebook_link": "youremail@unomaha.edu",
+  "donate": "youremail@unomaha.edu",
+  "email_link": "youremail@unomaha.edu",
+  "hash_tag": "youremail@unomaha.edu",
+  "instagram_link": "youremail@unomaha.edu",
+  "twitter_link": "youremail@unomaha.edu",
+  "WAGTAIL_URL": "cms/",
+  "WAGTAIL_ABOUT_PAGE": "about/",
+  "footer_title": "Wagtail Footer Page",
+  "WAGTAIL_FAQ_PAGE": "faq/",
+  "WAGTAIL_SPONSORS_PAGE": "sponsors/"
+}

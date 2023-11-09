@@ -1,0 +1,28 @@
+{
+  "first_name": "John",
+  "last_name": "Smith",
+  "your_email": "youremail@gmail.com",
+  "yzip": "68147",
+  "memorial_name": "Test Memorial",
+  "memorial_description": "Memorial Description Test",
+  "founder_name": "John Smith",
+  "mem_location": "6001 Dodge Street, Omaha, NE, US",
+  "street": "6001 Dodge Street",
+  "city": "Omaha",
+  "state": "NE",
+  "zip": "68106",
+  "mem_type": "Website",
+  "date": "03/09/2023",
+  "end_date": "03/11/2023",
+  "memorial_email": "memorialemail@gmail.com",
+  "memorial_website": "https://www.iamawebsite.com",
+  "memorial_profile_link": "https://www.iamawebsite.com",
+  "virtual_tour": "https://virtualtourwebsite.com",
+  "photo_links": "https://imgur.com/t/cat/ei8Hbua",
+  "video_links": "https://www.youtube.com/watch?v=z6ep308goxQ",
+  "press_links": "https://www.cnn.com/style/article/supertall-skyscraper-austin-texas-wilson-tower/index.html",
+  "twitter": "https://twitter.com/JeffBezos",
+  "instagram": "https://www.instagram.com/pain1666/",
+  "facebook": "https://www.facebook.com/zuck"
+
+}

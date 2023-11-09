@@ -1,0 +1,7 @@
+
+{
+  "LOCATION_API_LIST": "api/location/list/",
+  "MEMORIAL_API_LIST": "api/memorial/list",
+  "MEDIALINK_API_LIST": "api/medialink/list/",
+  "CREATE_MEMORIAL_API": "api/create/"
+}

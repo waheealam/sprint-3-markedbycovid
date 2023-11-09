@@ -1,0 +1,4 @@
+{
+  "WAGTAIL_URL": "cms/",
+  "WAGTAIL_FAQ_PAGE": "faq/"
+}
